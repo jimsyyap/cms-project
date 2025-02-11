@@ -205,7 +205,3 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - [Gin Framework](https://gin-gonic.com/)
 - [TailwindCSS](https://tailwindcss.com/)
 - [AWS Documentation](https://aws.amazon.com/documentation/)
-
----
-
-Let me know if you need further assistance! 🚀
