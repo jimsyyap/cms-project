@@ -19,7 +19,8 @@ func main() {
     r := gin.Default()
 
     // Register API routes
-    api.RegisterRoutes(r)
+    r.POST("/register", api.RegisterHandler)
+    r.POST("/login", api.LoginHandler)
 
     // Start the server
     r.Run(":8080")

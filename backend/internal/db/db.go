@@ -1,20 +1,29 @@
-// backend/internal/db/db.go
 package db
 
 import (
-    "context"
-    "fmt"
-    "github.com/jackc/pgx/v5/pgxpool"
+    "github.com/jimsyyap/cms-project/internal/models"
+    "gorm.io/driver/postgres"
+    "gorm.io/gorm"
 )
 
-var DB *pgxpool.Pool
+var DB *gorm.DB
 
 func InitDB() {
-    connStr := "postgres://jim:definitionemotionexperience@localhost:5432/cmsdb"
+    // PostgreSQL connection string
+    dsn := "host=localhost user=jim password=definitionemotionexperience dbname=cmsdb port=5432 sslmode=disable"
+
+    // Connect to the database
     var err error
-    DB, err = pgxpool.New(context.Background(), connStr)
+    DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
     if err != nil {
-        panic(fmt.Sprintf("Unable to connect to database: %v\n", err))
+        panic("Failed to connect to database: " + err.Error())
     }
-    fmt.Println("Connected to database!")
+
+    // Run migrations
+    err = DB.AutoMigrate(&models.User{})
+    if err != nil {
+        panic("Failed to migrate database: " + err.Error())
+    }
+
+    println("Database connected and migrated successfully!")
 }
