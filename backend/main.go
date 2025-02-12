@@ -2,9 +2,9 @@
 package main
 
 import (
-    "cms-backend/internal/api"
-    "cms-backend/internal/config"
-    "cms-backend/internal/db"
+    "github.com/jimsyyap/cms-project/internal/api"
+    "github.com/jimsyyap/cms-project/internal/config"
+    "github.com/jimsyyap/cms-project/internal/db"
     "github.com/gin-gonic/gin"
 )
 

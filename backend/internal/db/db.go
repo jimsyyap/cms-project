@@ -10,7 +10,7 @@ import (
 var DB *pgxpool.Pool
 
 func InitDB() {
-    connStr := "postgres://user:password@localhost:5432/cmsdb"
+    connStr := "postgres://jim:definitionemotionexperience@localhost:5432/cmsdb"
     var err error
     DB, err = pgxpool.New(context.Background(), connStr)
     if err != nil {
