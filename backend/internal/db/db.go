@@ -18,35 +18,12 @@ func InitDB() {
     }
 
     // Get database configuration from environment variables
-    dbHost, exists := os.LookupEnv("DB_HOST")
-    if !exists {
-        panic("DB_HOST environment variable is not set")
-    }
-
-    dbPort, exists := os.LookupEnv("DB_PORT")
-    if !exists {
-        panic("DB_PORT environment variable is not set")
-    }
-
-    dbUser, exists := os.LookupEnv("DB_USER")
-    if !exists {
-        panic("DB_USER environment variable is not set")
-    }
-
-    dbPassword, exists := os.LookupEnv("DB_PASSWORD")
-    if !exists {
-        panic("DB_PASSWORD environment variable is not set")
-    }
-
-    dbName, exists := os.LookupEnv("DB_NAME")
-    if !exists {
-        panic("DB_NAME environment variable is not set")
-    }
-
-    dbSSLMode, exists := os.LookupEnv("DB_SSLMODE")
-    if !exists {
-        dbSSLMode = "disable" // Default to "disable" if not set
-    }
+    dbHost := os.Getenv("DB_HOST")
+    dbPort := os.Getenv("DB_PORT")
+    dbUser := os.Getenv("DB_USER")
+    dbPassword := os.Getenv("DB_PASSWORD")
+    dbName := os.Getenv("DB_NAME")
+    dbSSLMode := os.Getenv("DB_SSLMODE")
 
     // PostgreSQL connection string
     dsn := "host=" + dbHost + " user=" + dbUser + " password=" + dbPassword + " dbname=" + dbName + " port=" + dbPort + " sslmode=" + dbSSLMode
@@ -57,8 +34,8 @@ func InitDB() {
         panic("Failed to connect to database: " + err.Error())
     }
 
-    // Run migrations
-    err = DB.AutoMigrate(&models.User{})
+    // Run migrations for all models
+    err = DB.AutoMigrate(&models.User{}, &models.Post{}) // Add &models.Post{} here
     if err != nil {
         panic("Failed to migrate database: " + err.Error())
     }

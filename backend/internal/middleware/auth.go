@@ -4,6 +4,7 @@ import (
     "github.com/jimsyyap/cms-project/internal/utils"
     "github.com/gin-gonic/gin"
     "net/http"
+    "log"
 )
 
 // AuthMiddleware verifies the JWT token
@@ -17,9 +18,12 @@ func AuthMiddleware() gin.HandlerFunc {
             return
         }
 
+        log.Println("Received token:", token) // Log the token for debugging
+
         // Verify the token
         claims, err := utils.VerifyJWT(token)
         if err != nil {
+            log.Println("Token verification failed:", err) // Log the error for debugging
             c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid token"})
             c.Abort()
             return
@@ -29,7 +33,6 @@ func AuthMiddleware() gin.HandlerFunc {
         c.Set("userID", claims["user_id"])
         c.Set("role", claims["role"])
 
-        // Continue to the next handler
         c.Next()
     }
 }

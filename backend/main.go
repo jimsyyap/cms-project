@@ -38,6 +38,12 @@ func main() {
             role := c.GetString("role")
             c.JSON(http.StatusOK, gin.H{"userID": userID, "role": role})
         })
+        // Post management routes
+        protected.POST("/posts", api.CreatePostHandler)
+        protected.GET("/posts/:id", api.GetPostHandler)
+        protected.PUT("/posts/:id", api.UpdatePostHandler)
+        protected.DELETE("/posts/:id", api.DeletePostHandler)
+        protected.GET("/posts", api.GetAllPostsHandler)
     }
 
     // Start the server
