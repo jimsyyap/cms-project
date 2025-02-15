@@ -35,7 +35,13 @@ func InitDB() {
     }
 
     // Run migrations for all models
-    err = DB.AutoMigrate(&models.User{}, &models.Post{}) // Add &models.Post{} here
+    // err = DB.AutoMigrate(&models.User{}, &models.Post{}) // Add &models.Post{} here
+    // if err != nil {
+    //     panic("Failed to migrate database: " + err.Error())
+    // }
+
+    // Run migrations for all models
+    err = DB.AutoMigrate(&models.User{}, &models.Post{}, &models.Media{}) // Add &models.Media{}
     if err != nil {
         panic("Failed to migrate database: " + err.Error())
     }
