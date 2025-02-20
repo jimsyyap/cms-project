@@ -29,19 +29,14 @@ func main() {
     protected := r.Group("/api")
     protected.Use(middleware.AuthMiddleware())
     {
-        // Post management routes
-        protected.POST("/posts", api.CreatePostHandler)
-        protected.GET("/posts/:id", api.GetPostHandler)
-        protected.PUT("/posts/:id", api.UpdatePostHandler)
-        protected.DELETE("/posts/:id", api.DeletePostHandler)
-        protected.GET("/posts", api.GetAllPostsHandler)
+        // User management routes
+        protected.GET("/users", api.GetAllUsersHandler)
+        protected.GET("/users/:id", api.GetUserByIDHandler)
 
-        // Media upload route
-        protected.POST("/media/upload", api.UploadMediaHandler)
+        // Admin-only routes
+        protected.PUT("/users/:id/role", middleware.AdminMiddleware(), api.UpdateUserRoleHandler)
+        protected.DELETE("/users/:id", middleware.AdminMiddleware(), api.DeleteUserHandler)
     }
-
-    // Serve uploaded files
-    r.Static("/uploads", "./uploads")
 
     // Start the server
     r.Run(":8080")
